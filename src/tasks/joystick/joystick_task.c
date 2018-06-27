@@ -19,7 +19,6 @@ __task void joystick_task() {
 
         switch (read_dir) {
             case DIR_NO_INPUT:
-                direction = dir_none;
                 break;
 
             case DIR_UP:
@@ -39,7 +38,6 @@ __task void joystick_task() {
                 break;
 
             case default:
-                direction = dir_none;
                 display_error(ERR_JOYSTICK_INVALID_VAL);
                 break;
         }
@@ -62,4 +60,8 @@ err_t joystick_task_init() {
     return display_error(err);
 }
 
-joy_dir_t joystick_dir_get() { return direction; }
+joy_dir_t joystick_dir_get() {
+    dir_to_return = direction;
+    direction = dir_none;
+    return dir_to_return;
+}
