@@ -13,7 +13,7 @@ uint8_t game_over_flag;
 
 OS_SEM score_change;
 
-size_t is_game_over(void);
+uint32_t is_game_over(void);
 
 __task void score_task() {
     uint32_t i;
@@ -61,6 +61,7 @@ __task void score_task() {
 }
 
 err_t score_task_init() {
+    err_t err = ERR_NONE;
     int tid;
 
     // initialize the score_change semaphore to 0
@@ -70,30 +71,33 @@ err_t score_task_init() {
     tid = os_tsk_create(score_task, 1);
 
     // check the tid of the score task, return an error if it's zero
-    if (tid == 0) return ERR_SCORE_INIT_FAIL;
+    if (tid == 0) err = ERR_SCORE_INIT_FAIL;
 
     // return no error
-    return ERR_NONE;
+    return display_error(err);
 }
-
 
 uint8_t score_get() { return score; }
 
 err_t score_increment() {
+    err_t err = ERR_NONE;
+
     // increment the score
     score++;
 
     // check if score rolled over, and error if so
-    if (score == 0) return ERR_SCORE_OVERFLOW;
+    if (score == 0) err = ERR_SCORE_OVERFLOW;
 
     // send to the semaphore
     os_sem_send(&score_change);
 
     // no error
-    return ERR_NONE;
+    return display_error(err);
 }
 
 err_t score_reset() {
+    err_t err = ERR_NONE;
+
     // set the score to zero
     score = 0;
 
@@ -101,18 +105,20 @@ err_t score_reset() {
     os_sem_send(&score_change);
 
     // no error
-    return ERR_NONE;
+    return display_error(err);
 }
 
 err_t score_game_over() {
+    err_t err = ERR_NONE;
+
     game_over_flag = 1;
 
     os_sem_send(&score_change);
 
-    return ERR_NONE;
+    return display_error(err);
 }
 
-size_t is_game_over() {
+uint32_t is_game_over() {
     if (game_over_flag == 1) {
         game_over_flag = 0;
         return 1;
