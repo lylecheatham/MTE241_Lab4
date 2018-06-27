@@ -1,6 +1,5 @@
 #include <stdint.h>
 
-
 #define DIR_NO_INPUT 0
 #define DIR_UP 1
 #define DIR_RIGHT 2

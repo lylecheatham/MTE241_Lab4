@@ -1,5 +1,5 @@
-#include <lpc17xx.h>
 #include "led.h"
+#include <lpc17xx.h>
 
 void init_LEDs(void) {
     LPC_GPIO2->FIODIR |= 0x0000007C;
@@ -7,7 +7,6 @@ void init_LEDs(void) {
     LPC_GPIO1->FIOCLR = 0x0000007C;
     LPC_GPIO2->FIOCLR = 0xB0000000;
 }
-
 
 // Displays a number using the LEDs on the bottom of the board
 //

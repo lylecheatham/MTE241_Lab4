@@ -17,4 +17,3 @@ uint32_t get_button_press(void) {
         return 0;
     }
 }
-

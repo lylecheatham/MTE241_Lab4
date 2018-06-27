@@ -1,7 +1,7 @@
 #include "score.h"
+#include <RTX.h>
 #include "led.h"
 #include "util.h"
-#include <RTX.h>
 
 #define GAME_OVER_WAIT_TIME_MS = 500;
 
@@ -13,7 +13,7 @@ OS_SEM score_change;
 
 size_t is_game_over();
 
-err_t score_task_init(){
+err_t score_task_init() {
     int tid;
 
     // initialize the score_change semaphore to 0
@@ -23,14 +23,13 @@ err_t score_task_init(){
     tid = os_tsk_create(score_task, 1);
 
     // check the tid of the score task, return an error if it's zero
-    if(tid == 0) return ERR_SCORE_INIT_FAIL;
+    if (tid == 0) return ERR_SCORE_INIT_FAIL;
 
     // return no error
     return ERR_NONE;
 }
 
 __task void score_task() {
-
     // initialize the score to zero
     score = 0;
 
@@ -42,32 +41,29 @@ __task void score_task() {
 
     // loop
     while (1) {
-
         // wait until there is a change in score
         os_sem_wait(&score_change);
 
         // if the game over flag is set
-        if(is_game_over()){
-
+        if (is_game_over()) {
             // we want to flash the LEDs three times
-            for(size_t i = 0; i < 3; i++){
-
+            for (size_t i = 0; i < 3; i++) {
                 // put all LEDs on
                 display_number(0xFF);
 
                 // wait
-                os_dly_wait(GAME_OVER_WAIT_TIME_MS/RTOS_TICK_MS);
+                os_dly_wait(GAME_OVER_WAIT_TIME_MS / RTOS_TICK_MS);
 
                 // put score back
                 display_number(score);
 
                 // wait
-                os_dly_wait(GAME_OVER_WAIT_TIME_MS/RTOS_TICK_MS);
+                os_dly_wait(GAME_OVER_WAIT_TIME_MS / RTOS_TICK_MS);
             }
         }
 
         // else just display the score
-        else{
+        else {
             display_number(score);
         }
 
@@ -76,16 +72,14 @@ __task void score_task() {
     }
 }
 
-uint8_t score_get(){
-    return score;
-}
+uint8_t score_get() { return score; }
 
-err_t score_increment(){
+err_t score_increment() {
     // increment the score
     score++;
 
     // check if score rolled over, and error if so
-    if(score == 0) return ERR_SCORE_OVERFLOW;
+    if (score == 0) return ERR_SCORE_OVERFLOW;
 
     // send to the semaphore
     os_sem_send(&score_change);
@@ -94,9 +88,8 @@ err_t score_increment(){
     return ERR_NONE;
 }
 
-
-err_t score_reset(){
-    //set the score to zero
+err_t score_reset() {
+    // set the score to zero
     score = 0;
 
     // send to the semaphore
@@ -106,7 +99,7 @@ err_t score_reset(){
     return ERR_NONE;
 }
 
-err_t score_game_over(){
+err_t score_game_over() {
     game_over_flag = 1;
 
     os_sem_send(&score_change);
@@ -114,9 +107,8 @@ err_t score_game_over(){
     return ERR_NONE;
 }
 
-
-size_t is_game_over(){
-	if(game_over_flag == 1){
+size_t is_game_over() {
+    if (game_over_flag == 1) {
         game_over_flag = 0;
         return 1;
     }

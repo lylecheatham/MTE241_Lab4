@@ -3,7 +3,6 @@
 
 void init_joystick(void) {}
 
-
 // returns a uint32_t number indicating the direction of the joystick.
 // If multiple directions are pressed, the first in the order UP, RIGHT, DOWN,
 // LEFT is returned.
@@ -46,4 +45,3 @@ uint32_t get_joystick_pressed(void) {
     }
     return 0;
 }
-

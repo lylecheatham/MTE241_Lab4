@@ -1,5 +1,5 @@
-#include <lpc17xx.h>
 #include "pot.h"
+#include <lpc17xx.h>
 
 void init_potentiometer(void) {
     LPC_PINCON->PINSEL1 &= ~(0x03 << 18);
@@ -11,7 +11,6 @@ void init_potentiometer(void) {
                     (4 << 8) |  // ADC clock is 25MHz/5
                     (1 << 21);  // enable ADC
 }
-
 
 // returns a uint32_t number indicating the positional value of the
 // potentiometer

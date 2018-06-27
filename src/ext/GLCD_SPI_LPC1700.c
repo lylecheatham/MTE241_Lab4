@@ -22,7 +22,7 @@
 /*********************** Hardware specific configuration **********************/
 
 /* SPI Interface: SPI3
-   
+   
    PINS:
    - CS     = P0.6 (GPIO pin)
    - RS     = GND
