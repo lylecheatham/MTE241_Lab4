@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#define RTOS_TICK_MILLIS 10
+#define RTOS_TICK_MS 10
 
 // gets a bit from a uint32_t
 //

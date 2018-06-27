@@ -1,11 +1,11 @@
 #include "score_task.h"
 
-#include <RTX.h>
+#include <RTL.h>
 
 #include "led.h"
 #include "util.h"
 
-#define GAME_OVER_WAIT_TIME_MS = 500;
+#define GAME_OVER_WAIT_TIME_MS 500
 
 uint8_t score;
 
@@ -13,25 +13,11 @@ uint8_t game_over_flag;
 
 OS_SEM score_change;
 
-size_t is_game_over();
-
-err_t score_task_init() {
-    int tid;
-
-    // initialize the score_change semaphore to 0
-    os_sem_init(score_change, 0);
-
-    // get the tid of the score task
-    tid = os_tsk_create(score_task, 1);
-
-    // check the tid of the score task, return an error if it's zero
-    if (tid == 0) return ERR_SCORE_INIT_FAIL;
-
-    // return no error
-    return ERR_NONE;
-}
+size_t is_game_over(void);
 
 __task void score_task() {
+    uint32_t i;
+
     // initialize the score to zero
     score = 0;
 
@@ -44,12 +30,12 @@ __task void score_task() {
     // loop
     while (1) {
         // wait until there is a change in score
-        os_sem_wait(&score_change);
+        os_sem_wait(&score_change, 0);
 
         // if the game over flag is set
         if (is_game_over()) {
             // we want to flash the LEDs three times
-            for (size_t i = 0; i < 3; i++) {
+            for (i = 0; i < 3; i++) {
                 // put all LEDs on
                 display_number(0xFF);
 
@@ -73,6 +59,23 @@ __task void score_task() {
         os_tsk_pass();
     }
 }
+
+err_t score_task_init() {
+    int tid;
+
+    // initialize the score_change semaphore to 0
+    os_sem_init(score_change, 0);
+
+    // get the tid of the score task
+    tid = os_tsk_create(score_task, 1);
+
+    // check the tid of the score task, return an error if it's zero
+    if (tid == 0) return ERR_SCORE_INIT_FAIL;
+
+    // return no error
+    return ERR_NONE;
+}
+
 
 uint8_t score_get() { return score; }
 

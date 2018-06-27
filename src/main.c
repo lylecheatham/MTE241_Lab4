@@ -1,6 +1,12 @@
 #include <RTL.h>
 #include <stdint.h>
+#include <stdio.h>
 #include "GLCD.h"
+#include "pot.h"
+#include "led.h"
+#include "util.h"
+#include "button.h"
+#include "joystick.h"
 
 __task void button_task() {
     init_joystick();
@@ -76,9 +82,7 @@ __task void game_loop_task() {
 
 __task void start_tasks() {
     // Create all other tasks
-    os_tsk_create(pot_putty, 1);
-    os_tsk_create(joy_display, 1);
-    os_tsk_create(button_led, 1);
+
 
     // Delete task because no longer needed
     os_tsk_delete_self();

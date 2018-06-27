@@ -1,5 +1,6 @@
 #include "led.h"
 #include <lpc17xx.h>
+#include "util.h"
 
 void init_LEDs(void) {
     LPC_GPIO2->FIODIR |= 0x0000007C;

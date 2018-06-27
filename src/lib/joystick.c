@@ -1,5 +1,6 @@
 #include "joystick.h"
 #include <lpc17xx.h>
+#include "util.h"
 
 void init_joystick(void) {}
 
