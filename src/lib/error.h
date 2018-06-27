@@ -11,9 +11,9 @@ void display_error(err_t err);
 
 enum ERROR {
     ERR_NONE = 0,
-    ERR_SCORE_GENERIC = 8,
-    ERR_SCORE_INIT_FAIL = 9,
-    ERR_SCORE_OVERFLOW = 10
+    ERR_SCORE_GENERIC = 10,
+    ERR_SCORE_INIT_FAIL = 11,
+    ERR_SCORE_OVERFLOW = 12
 };
 
 #endif /* ERROR_H */
