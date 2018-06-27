@@ -1,5 +1,7 @@
-#include "score.h"
+#include "score_task.h"
+
 #include <RTX.h>
+
 #include "led.h"
 #include "util.h"
 
