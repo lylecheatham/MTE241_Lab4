@@ -1,3 +1,6 @@
+#ifndef   LED_H
+#define   LED_H
+
 #include <stdint.h>
 
 void init_LEDs(void);
@@ -10,3 +13,5 @@ void init_LEDs(void);
 // Returns:
 //   void
 void display_number(uint8_t num);
+
+#endif /* LED_H */

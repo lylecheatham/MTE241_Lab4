@@ -1,3 +1,6 @@
+#ifndef   UTIL_H
+#define   UTIL_H
+
 #include <stdint.h>
 
 #define RTOS_TICK_MILLIS 10
@@ -11,3 +14,5 @@
 // Returns:
 //   returns uint32_t: the requested value in the LSB, everything else zeroed
 uint32_t get_bit(uint32_t val, uint8_t bit);
+
+#endif /* UTIL_H */

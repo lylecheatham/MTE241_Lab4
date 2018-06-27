@@ -1,3 +1,6 @@
+#ifndef   ERROR_H
+#define   ERROR_H
+
 #include <stdint.h>
 
 typedef uint8_t err_t;
@@ -10,3 +13,5 @@ enum ERROR {
     ERR_SCORE_INIT_FAIL = 9,
     ERR_SCORE_OVERFLOW = 10
 }
+
+#endif /* ERROR_H */

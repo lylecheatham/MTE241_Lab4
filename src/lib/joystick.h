@@ -1,3 +1,6 @@
+#ifndef   JOYSTICK_H
+#define   JOYSTICK_H
+
 #include <stdint.h>
 
 #define DIR_NO_INPUT 0
@@ -34,3 +37,5 @@ uint32_t get_joystick_dir(void);
 //      0 = not pressed
 //      1 = pressed
 uint32_t get_joystick_pressed(void);
+
+#endif /* JOYSTICK_H */
