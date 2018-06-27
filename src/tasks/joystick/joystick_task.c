@@ -1,12 +1,12 @@
 #include "joystick_task.h"
 
+#include <RTL.h>
+
 #include "joystick.h"
 
 joy_dir_t direction;
 
 __task void joystick_task() {
-    uint32_t read_dir;
-
     // initialize the joystick
     init_joystick();
 
@@ -37,7 +37,7 @@ __task void joystick_task() {
                 direction = dir_left;
                 break;
 
-            case default:
+            default:
                 display_error(ERR_JOYSTICK_INVALID_VAL);
                 break;
         }
@@ -61,7 +61,7 @@ err_t joystick_task_init() {
 }
 
 joy_dir_t joystick_dir_get() {
-    dir_to_return = direction;
+    joy_dir_t dir_to_return = direction;
     direction = dir_none;
     return dir_to_return;
 }

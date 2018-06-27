@@ -7,7 +7,7 @@ typedef uint8_t err_t;
 
 void error_init(void);
 
-void display_error(err_t err);
+err_t display_error(err_t err);
 
 enum ERROR {
     ERR_NONE = 0,
