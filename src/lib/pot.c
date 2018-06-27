@@ -1,5 +1,8 @@
 #include "pot.h"
+
 #include <lpc17xx.h>
+
+#include "util.h"
 
 void init_potentiometer(void) {
     LPC_PINCON->PINSEL1 &= ~(0x03 << 18);

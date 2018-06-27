@@ -1,5 +1,8 @@
 #include "button.h"
+
 #include <lpc17xx.h>
+
+#include "util.h"
 
 // returns a uint32_t number indicating button state of the button.
 //
