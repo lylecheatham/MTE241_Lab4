@@ -1,5 +1,5 @@
-#ifndef   SCORE_TASK_H
-#define   SCORE_TASK_H
+#ifndef SCORE_TASK_H
+#define SCORE_TASK_H
 
 #include <stdint.h>
 #include "error.h"

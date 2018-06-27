@@ -1,5 +1,5 @@
-#ifndef   POT_H
-#define   POT_H
+#ifndef POT_H
+#define POT_H
 
 #include <stdint.h>
 
