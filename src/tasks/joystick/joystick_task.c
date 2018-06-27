@@ -1,5 +1,65 @@
 #include "joystick_task.h"
 
-err_t joystick_task_init(){}
+#include "joystick.h"
 
-joy_dir_t joystick_dir_get(){}
+joy_dir_t direction;
+
+__task void joystick_task() {
+    uint32_t read_dir;
+
+    // initialize the joystick
+    init_joystick();
+
+    // initialize direction to none
+    direction = dir_none;
+
+    // loop
+    while (1) {
+        uint32_t read_dir = get_joystick_dir();
+
+        switch (read_dir) {
+            case DIR_NO_INPUT:
+                direction = dir_none;
+                break;
+
+            case DIR_UP:
+                direction = dir_up;
+                break;
+
+            case DIR_RIGHT:
+                direction = dir_right;
+                break;
+
+            case DIR_DOWN:
+                direction = dir_down;
+                break;
+
+            case DIR_LEFT:
+                direction = dir_left;
+                break;
+
+            case default:
+                direction = dir_none;
+                display_error(ERR_JOYSTICK_INVALID_VAL);
+                break;
+        }
+        // pass
+        os_tsk_pass();
+    }
+}
+
+err_t joystick_task_init() {
+    err_t err = ERR_NONE;
+    int tid;
+
+    // get the tid of the score task
+    tid = os_tsk_create(joystick_task, 1);
+
+    // check the tid of the score task, return an error if it's zero
+    if (tid == 0) err = ERR_JOYSTICK_INIT_FAIL;
+
+    // return no error
+    return display_error(err);
+}
+
+joy_dir_t joystick_dir_get() { return direction; }
