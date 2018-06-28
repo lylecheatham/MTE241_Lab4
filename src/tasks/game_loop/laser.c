@@ -1,28 +1,24 @@
 #include "laser.h"
 
-err_t new_laser(location* loc, laser_list* list){
+#include <stddef.h>
+
+err_t new_laser(location* loc, laser_list* list) {
     err_t err = ERR_NONE;
 
-    if(list == NULL || loc == NULL){
+    if (list == NULL || loc == NULL) {
         err = ERR_LASER_NULLPTR;
         return display_error(err);
     }
 
-    if(list->num_active >= list->max_length){
+    if (list->num_active >= list->max_length) {
         err = ERR_LASER_OVERFLOW;
         return display_error(err);
     }
-
 }
 
-err_t new_laser_enemy(location* loc, lasers* las){
+err_t new_laser_enemy(location* loc, lasers* las) {}
 
-}
-
-err_t new_laser_player(location* loc, lasers* las){
-
-}
-
+err_t new_laser_player(location* loc, lasers* las) {}
 
 uint32_t detect_collision(pos_t ship_x, pos_t ship_y, pos_t laser_x,
                           pos_t laser_y) {

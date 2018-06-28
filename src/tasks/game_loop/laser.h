@@ -5,6 +5,7 @@
 
 #include "config.h"
 #include "field.h"
+#include "error.h"
 
 // laser data type creates a laser
 //
