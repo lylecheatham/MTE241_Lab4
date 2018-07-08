@@ -20,7 +20,7 @@ err_t display_show(enemy_list* ships_enemy, player_ship* ship_player, laser_list
     // Clear the display
     GLCD_Clear(Black);
 
-    //TODO iterate through and display
+    // TODO iterate through and display
 
     return display_error(err);
 }

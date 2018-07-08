@@ -1,10 +1,10 @@
 #include <RTL.h>
 #include <stdint.h>
 #include <stdio.h>
-#include "score_task.h"
 #include "button_task.h"
-#include "joystick_task.h"
 #include "game_loop_task.h"
+#include "joystick_task.h"
+#include "score_task.h"
 
 __task void test_score() {
     uint32_t i;
