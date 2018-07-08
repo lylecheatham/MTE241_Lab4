@@ -36,7 +36,7 @@ typedef struct global_lasers {
 } global_lasers;
 
 
-err_t reset_lasers(global_lasers* las);
+err_t reset_lasers(laser_list* player_lasers, laser_list* enemy_lasers);
 
 err_t new_laser_enemy(pos_t x, pos_t y, global_lasers* las);
 err_t new_laser_player(pos_t x, pos_t y, global_lasers* las);

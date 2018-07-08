@@ -7,25 +7,25 @@ err_t new_laser(pos_t x, pos_t y, laser_list* list);
 err_t delete_laser(laser* las, laser_list* list);
 uint32_t detect_collision(pos_t ship_x, pos_t ship_y, pos_t laser_x, pos_t laser_y);
 
-err_t reset_lasers(global_lasers* las) {
+err_t reset_lasers(laser_list* player_lasers, laser_list* enemy_lasers){
     err_t err = ERR_NONE;
     uint32_t index;
 
-    las->player_lasers.num_active = 0;
-    las->player_lasers.max_length = LASER_MAX_PLAYER;
-    las->enemy_lasers.num_active = 0;
-    las->enemy_lasers.max_length = LASER_MAX_ENEMY;
+    player_lasers->num_active = 0;
+    player_lasers->max_length = LASER_MAX_PLAYER;
+    enemy_lasers->num_active = 0;
+    enemy_lasers->max_length = LASER_MAX_ENEMY;
 
-    for (index = 0; index < las->player_lasers.max_length; index++) {
-        las->player_lasers.list[index].active = 0;
-        las->player_lasers.list[index].laser_location.x = 0;
-        las->player_lasers.list[index].laser_location.y = 0;
+    for (index = 0; index < player_lasers->max_length; index++) {
+        player_lasers->list[index].active = 0;
+        player_lasers->list[index].laser_location.x = 0;
+        player_lasers->list[index].laser_location.y = 0;
     }
 
-    for (index = 0; index < las->enemy_lasers.max_length; index++) {
-        las->enemy_lasers.list[index].active = 0;
-        las->enemy_lasers.list[index].laser_location.x = 0;
-        las->enemy_lasers.list[index].laser_location.y = 0;
+    for (index = 0; index < enemy_lasers->max_length; index++) {
+        enemy_lasers->list[index].active = 0;
+        enemy_lasers->list[index].laser_location.x = 0;
+        enemy_lasers->list[index].laser_location.y = 0;
     }
 
     return display_error(err);
