@@ -2,7 +2,7 @@
 
 #include <stddef.h>
 
-err_t move_enemy(enemy* ship, int32_t dx, int32_t dy);
+err_t move_enemy(enemy* ship, vel_t dx, vel_t dy);
 
 err_t reset_ships(enemy_list* enemies, player_ship* player) {
     err_t err = ERR_NONE;
@@ -34,7 +34,7 @@ err_t reset_ships(enemy_list* enemies, player_ship* player) {
     return display_error(err);
 }
 
-err_t move_enemies(enemy_list* ships, int32_t dx, int32_t dy) {
+err_t move_enemies(enemy_list* ships, vel_t dx, vel_t dy) {
     err_t err = ERR_NONE;
     err_t temp_err = ERR_NONE;
     uint32_t index;
@@ -74,7 +74,7 @@ err_t move_enemies(enemy_list* ships, int32_t dx, int32_t dy) {
     return display_error(err);
 }
 
-err_t move_enemy(enemy* ship, int32_t dx, int32_t dy) {
+err_t move_enemy(enemy* ship, vel_t dx, vel_t dy) {
     err_t err = ERR_NONE;
 
     // Nullptr check
@@ -104,7 +104,7 @@ err_t move_enemy(enemy* ship, int32_t dx, int32_t dy) {
 }
 
 
-err_t move_player(player_ship* ship, int32_t dx) {
+err_t move_player(player_ship* ship, vel_t dx) {
     err_t err = ERR_NONE;
 
     // Nullptr check

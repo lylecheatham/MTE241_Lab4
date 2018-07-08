@@ -41,8 +41,8 @@ err_t reset_lasers(laser_list* player_lasers, laser_list* enemy_lasers);
 err_t new_laser_enemy(pos_t x, pos_t y, global_lasers* las);
 err_t new_laser_player(pos_t x, pos_t y, global_lasers* las);
 
-err_t move_lasers_list_player(global_lasers* las, int32_t dy, enemy_list* ships, pos_t lowest);
-err_t move_lasers_list_enemy(global_lasers* las, int32_t dy, player_ship* ship);
+err_t move_lasers_list_player(global_lasers* las, vel_t dy, enemy_list* ships, pos_t lowest);
+err_t move_lasers_list_enemy(global_lasers* las, vel_t dy, player_ship* ship);
 
 
 #endif /* LASER_H */

@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 typedef int32_t pos_t;
+typedef int32_t vel_t;
 
 // location data type stores the current x and y coordinates of an object
 //

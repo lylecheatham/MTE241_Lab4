@@ -42,7 +42,7 @@ typedef struct ships {
 
 
 err_t reset_ships(enemy_list* enemies, player_ship* player);
-err_t move_enemies(enemy_list* ships, int32_t dx, int32_t dy);
-err_t move_player(player_ship* ship, int32_t dx);
+err_t move_enemies(enemy_list* ships, vel_t dx, vel_t dy);
+err_t move_player(player_ship* ship, vel_t dx);
 
 #endif /* SHIPS_H */

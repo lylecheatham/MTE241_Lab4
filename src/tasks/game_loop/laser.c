@@ -100,7 +100,7 @@ err_t new_laser_player(pos_t x, pos_t y, global_lasers* las) {
     return display_error(err);
 }
 
-err_t move_lasers_list_player(global_lasers* las, int32_t dy, enemy_list* ships, pos_t lowest) {
+err_t move_lasers_list_player(global_lasers* las, vel_t dy, enemy_list* ships, pos_t lowest) {
     err_t err = ERR_NONE;
 
     uint32_t index;
@@ -140,7 +140,7 @@ err_t move_lasers_list_player(global_lasers* las, int32_t dy, enemy_list* ships,
 }
 
 
-err_t move_lasers_list_enemy(global_lasers* las, int32_t dy, player_ship* ship) {
+err_t move_lasers_list_enemy(global_lasers* las, vel_t dy, player_ship* ship) {
     err_t err = ERR_NONE;
 
     uint32_t index;
