@@ -1,7 +1,6 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-
 // Screen size
 #define SCREEN_Y_MIN 0
 #define SCREEN_Y_MAX 320
@@ -13,6 +12,10 @@
 #define SHIP_L_Y 10
 #define LASER_L_X 2
 #define LASER_L_Y 10
+
+// Speeds of things
+#define LASER_SPEED 10
+#define PLAYER_SPEED 5
 
 // spacing and initial locations of enemies
 #define SHIP_NUM_X 5
