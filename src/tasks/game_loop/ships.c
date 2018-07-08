@@ -1,10 +1,17 @@
 #include "ships.h"
 
+#include <stddef.h>
 err_t move_enemies(enemy_list* ships, int32_t dx, int32_t dy) {
     err_t err = ERR_NONE;
     err_t temp_err = ERR_NONE;
     uint32_t index;
     uint32_t count;
+
+    // Nullptr check
+    if (ships == NULL) {
+        err = ERR_SHIP_NULLPTR;
+        return display_error(err);
+    }
 
     // Check if there are any enemies alive
     if (ships->num_alive == 0) {
@@ -37,6 +44,12 @@ err_t move_enemies(enemy_list* ships, int32_t dx, int32_t dy) {
 err_t move_enemy(enemy* ship, int32_t dx, int32_t dy) {
     err_t err = ERR_NONE;
 
+    // Nullptr check
+    if (ship == NULL) {
+        err = ERR_SHIP_NULLPTR;
+        return display_error(err);
+    }
+
     // Check to ensure the enemies are not dead
     if (ship->active == 0) {
         err = ERR_SHIP_DEAD;
@@ -60,6 +73,12 @@ err_t move_enemy(enemy* ship, int32_t dx, int32_t dy) {
 
 err_t move_player(player_ship* ship, int32_t dx) {
     err_t err = ERR_NONE;
+
+    // Nullptr check
+    if (ship == NULL) {
+        err = ERR_SHIP_NULLPTR;
+        return display_error(err);
+    }
 
     // Check to ensure player is within the bounds of the screen
     if (ship->ship_location.x + dx > SCREEN_X_MAX || ship->ship_location.x + dx < SCREEN_X_MIN) {
