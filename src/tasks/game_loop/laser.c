@@ -3,11 +3,10 @@
 #include <stddef.h>
 
 
-err_t new_laser(pos_t x, pos_t y, laser_list* list);
 err_t delete_laser(laser* las, laser_list* list);
 uint32_t detect_collision(pos_t ship_x, pos_t ship_y, pos_t laser_x, pos_t laser_y);
 
-err_t reset_lasers(laser_list* player_lasers, laser_list* enemy_lasers){
+err_t reset_lasers(laser_list* enemy_lasers, laser_list* player_lasers){
     err_t err = ERR_NONE;
     uint32_t index;
 
@@ -72,35 +71,7 @@ err_t new_laser(pos_t x, pos_t y, laser_list* list) {
     return display_error(err);
 }
 
-err_t new_laser_enemy(pos_t x, pos_t y, global_lasers* las) {
-    err_t err = ERR_NONE;
-
-    // Perform a nullptr check
-    if (las == NULL) {
-        err = ERR_LASER_NULLPTR;
-        return display_error(err);
-    }
-
-    // Call the generic version
-    err = new_laser(x, y, &las->enemy_lasers);
-    return display_error(err);
-}
-
-err_t new_laser_player(pos_t x, pos_t y, global_lasers* las) {
-    err_t err = ERR_NONE;
-
-    // Perform a nullptr check
-    if (las == NULL) {
-        err = ERR_LASER_NULLPTR;
-        return display_error(err);
-    }
-
-    // Call the generic version
-    err = new_laser(x, y, &las->player_lasers);
-    return display_error(err);
-}
-
-err_t move_lasers_list_player(global_lasers* las, vel_t dy, enemy_list* ships, pos_t lowest) {
+err_t move_lasers_list_player(laser_list* las, vel_t dy, enemy_list* ships, pos_t lowest) {
     err_t err = ERR_NONE;
 
     uint32_t index;
@@ -113,22 +84,22 @@ err_t move_lasers_list_player(global_lasers* las, vel_t dy, enemy_list* ships, p
     }
 
     // Increment through the list until we have hit the end or iterated through all the active elements
-    for (index = 0, count = 0; index < las->player_lasers.max_length && count < las->player_lasers.num_active; index++) {
+    for (index = 0, count = 0; index < las->max_length && count < las->num_active; index++) {
         // If it's active
-        if (las->player_lasers.list[index].active) {
+        if (las->list[index].active) {
             // Increment the counter of active elements
             count++;
 
             // Move the element
-            las->player_lasers.list[index].laser_location.y += dy;
+            las->list[index].laser_location.y += dy;
 
             // If off the screen delete the laser
-            if (las->enemy_lasers.list[index].laser_location.y < SCREEN_Y_MIN || las->enemy_lasers.list[index].laser_location.y > SCREEN_Y_MAX) {
-                err = delete_laser(&las->enemy_lasers.list[index], &las->enemy_lasers);
+            if (las->list[index].laser_location.y < SCREEN_Y_MIN || las->list[index].laser_location.y > SCREEN_Y_MAX) {
+                err = delete_laser(&las->list[index], las);
             }
 
             // Check if the laser is lower or higher than the lowest or highest enemies, if so
-            if (las->player_lasers.list[index].laser_location.y + SHIP_L_Y + LASER_L_Y > lowest) {
+            if (las->list[index].laser_location.y + SHIP_L_Y + LASER_L_Y > lowest) {
                 // TODO collision detection
                 detect_collision(0, 0, 0, 0);
             }
@@ -140,7 +111,7 @@ err_t move_lasers_list_player(global_lasers* las, vel_t dy, enemy_list* ships, p
 }
 
 
-err_t move_lasers_list_enemy(global_lasers* las, vel_t dy, player_ship* ship) {
+err_t move_lasers_list_enemy(laser_list* las, vel_t dy, player_ship* ship) {
     err_t err = ERR_NONE;
 
     uint32_t index;
@@ -153,22 +124,22 @@ err_t move_lasers_list_enemy(global_lasers* las, vel_t dy, player_ship* ship) {
     }
 
     // Increment through the list until we have hit the end or iterated through all the active elements
-    for (index = 0, count = 0; index < las->enemy_lasers.max_length && count < las->enemy_lasers.num_active; index++) {
+    for (index = 0, count = 0; index < las->max_length && count < las->num_active; index++) {
         // If it's active
-        if (las->enemy_lasers.list[index].active) {
+        if (las->list[index].active) {
             // Increment the counter of active elements
             count++;
 
             // Move the element
-            las->enemy_lasers.list[index].laser_location.y += dy;
+            las->list[index].laser_location.y += dy;
 
             // If off the screen delete the laser
-            if (las->enemy_lasers.list[index].laser_location.y < SCREEN_Y_MIN || las->enemy_lasers.list[index].laser_location.y > SCREEN_Y_MAX) {
-                err = delete_laser(&las->enemy_lasers.list[index], &las->enemy_lasers);
+            if (las->list[index].laser_location.y < SCREEN_Y_MIN || las->list[index].laser_location.y > SCREEN_Y_MAX) {
+                err = delete_laser(&las->list[index], las);
             }
 
             // Check if the laser is lower or higher than the lowest or highest enemies, if so
-            if (las->enemy_lasers.list[index].laser_location.y - SHIP_L_Y - LASER_L_Y < PLAYER_Y) {
+            if (las->list[index].laser_location.y - SHIP_L_Y - LASER_L_Y < PLAYER_Y) {
                 // TODO add collision detection
                 detect_collision(0, 0, 0, 0);
             }
