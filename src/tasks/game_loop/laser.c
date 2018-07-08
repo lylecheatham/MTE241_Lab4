@@ -121,10 +121,17 @@ err_t move_lasers_list_player(global_lasers* las, int32_t dy, enemy_list* ships,
 
             // Move the element
             las->player_lasers.list[index].laser_location.y += dy;
-        }
-        // Check if the laser is lower or higher than the lowest or highest enemies, if so
-        if (las->player_lasers.list[index].laser_location.y + SHIP_L_Y + LASER_L_Y > lowest) {
-            detect_collision(0, 0, 0, 0);
+
+            // If off the screen delete the laser
+            if (las->enemy_lasers.list[index].laser_location.y < SCREEN_Y_MIN || las->enemy_lasers.list[index].laser_location.y > SCREEN_Y_MAX) {
+                err = delete_laser(&las->enemy_lasers.list[index], &las->enemy_lasers);
+            }
+
+            // Check if the laser is lower or higher than the lowest or highest enemies, if so
+            if (las->player_lasers.list[index].laser_location.y + SHIP_L_Y + LASER_L_Y > lowest) {
+                // TODO collision detection
+                detect_collision(0, 0, 0, 0);
+            }
         }
     }
 
@@ -155,11 +162,14 @@ err_t move_lasers_list_enemy(global_lasers* las, int32_t dy, player_ship* ship) 
             // Move the element
             las->enemy_lasers.list[index].laser_location.y += dy;
 
-            // If off the screen
-            if (las->enemy_lasers.list[index].laser_location.y < 0) {
+            // If off the screen delete the laser
+            if (las->enemy_lasers.list[index].laser_location.y < SCREEN_Y_MIN || las->enemy_lasers.list[index].laser_location.y > SCREEN_Y_MAX) {
+                err = delete_laser(&las->enemy_lasers.list[index], &las->enemy_lasers);
             }
+
             // Check if the laser is lower or higher than the lowest or highest enemies, if so
             if (las->enemy_lasers.list[index].laser_location.y - SHIP_L_Y - LASER_L_Y < PLAYER_Y) {
+                // TODO add collision detection
                 detect_collision(0, 0, 0, 0);
             }
         }
