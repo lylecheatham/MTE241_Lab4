@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 #include "config.h"
+#include "error.h"
 #include "field.h"
 
 // enemy data type creates an enemy
@@ -11,8 +12,8 @@
 // alive - whether the enemy is currently alive
 // enemy_location - the current enemy x and y coordinates
 typedef struct enemy {
-    uint8_t alive;
-    location enemy_location;
+    uint8_t active;
+    location ship_location;
 } enemy;
 
 // enemy_list data type creates an array of enemies
@@ -31,12 +32,16 @@ typedef struct enemy_list {
 // enemy_location - the current player x and y coordinates
 // note the y coordinates of the player never change
 typedef struct player_ship {
-    location player_coords;
+    location ship_location;
 } player_ship;
 
 typedef struct ships {
     player_ship player;
     enemy_list enemies;
 } ships;
+
+
+err_t move_enemy(enemy* ship, int32_t dx, int32_t dy);
+err_t move_player(player_ship* ship, int32_t dx);
 
 #endif /* SHIPS_H */
