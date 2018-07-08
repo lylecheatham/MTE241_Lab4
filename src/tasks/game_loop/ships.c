@@ -1,6 +1,39 @@
 #include "ships.h"
 
 #include <stddef.h>
+
+err_t move_enemy(enemy* ship, int32_t dx, int32_t dy);
+
+err_t reset_ships(enemy_list* enemies, player_ship* player) {
+    err_t err = ERR_NONE;
+    uint32_t index;
+
+    // Nullptr check
+    if (enemies == NULL || player == NULL) {
+        err = ERR_SHIP_NULLPTR;
+        return display_error(err);
+    }
+
+    // Set player location to middle of the screen in x
+    player->ship_location.x = PLAYER_X;
+
+    // Set the player y to the fixed location
+    player->ship_location.y = PLAYER_Y;
+
+    // Initialize the enemy list
+    enemies->max_num_enemies = SHIPS_MAX_ENEMY;
+    enemies->num_alive = SHIPS_MAX_ENEMY;
+
+    // Initialize the locations of all the enemies
+    for (index = 0; index < enemies->max_num_enemies; index++) {
+        enemies->list[index].active = 1;
+        enemies->list[index].ship_location.x = (index % SHIP_NUM_X) * SHIP_ENEMY_SPACING_X + SHIP_ENEMY_LEFT_START;
+        enemies->list[index].ship_location.y = -((pos_t)(index % SHIP_NUM_Y) * SHIP_ENEMY_SPACING_Y) + SHIP_ENEMY_TOP_START;
+    }
+
+    return display_error(err);
+}
+
 err_t move_enemies(enemy_list* ships, int32_t dx, int32_t dy) {
     err_t err = ERR_NONE;
     err_t temp_err = ERR_NONE;

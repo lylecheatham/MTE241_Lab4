@@ -24,7 +24,7 @@ typedef struct enemy {
 typedef struct enemy_list {
     uint8_t num_alive;
     uint8_t max_num_enemies;
-    enemy list[SHIPS_MAX];
+    enemy list[SHIPS_MAX_ENEMY];
 } enemy_list;
 
 // player data type stores the location of the player
@@ -41,7 +41,8 @@ typedef struct ships {
 } ships;
 
 
-err_t move_enemy(enemy* ship, int32_t dx, int32_t dy);
+err_t reset_ships(enemy_list* enemies, player_ship* player);
+err_t move_enemies(enemy_list* ships, int32_t dx, int32_t dy);
 err_t move_player(player_ship* ship, int32_t dx);
 
 #endif /* SHIPS_H */
