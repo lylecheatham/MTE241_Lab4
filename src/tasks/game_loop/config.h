@@ -27,7 +27,7 @@
 
 // Initial location of player
 #define PLAYER_Y 20
-#define PLAYER_X ((SCREEN_X_MAX - SCREEN_X_MIN)/2)
+#define PLAYER_X ((SCREEN_X_MAX - SCREEN_X_MIN) / 2)
 
 // Max counts
 #define LASER_MAX_ENEMY 10

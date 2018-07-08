@@ -3,9 +3,9 @@
 #include <RTL.h>
 
 #include "config.h"
+#include "joystick_task.h"
 #include "laser.h"
 #include "ships.h"
-#include "joystick_task.h"
 
 __task void game_loop_task() {
     enemy_list ships_enemy;
@@ -37,9 +37,9 @@ __task void game_loop_task() {
         direction = joystick_dir_get();
 
         // Move the player accordingly
-        if(direction == dir_left){
+        if (direction == dir_left) {
             move_player(&ship_player, -PLAYER_SPEED);
-        } else if (direction == dir_right){
+        } else if (direction == dir_right) {
             move_player(&ship_player, PLAYER_SPEED);
         }
 

@@ -6,7 +6,7 @@
 err_t delete_laser(laser* las, laser_list* list);
 uint32_t detect_collision(pos_t ship_x, pos_t ship_y, pos_t laser_x, pos_t laser_y);
 
-err_t reset_lasers(laser_list* enemy_lasers, laser_list* player_lasers){
+err_t reset_lasers(laser_list* enemy_lasers, laser_list* player_lasers) {
     err_t err = ERR_NONE;
     uint32_t index;
 
