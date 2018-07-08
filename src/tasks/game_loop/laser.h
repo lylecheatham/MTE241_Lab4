@@ -6,6 +6,7 @@
 #include "config.h"
 #include "error.h"
 #include "field.h"
+#include "ships.h"
 
 // laser data type creates a laser
 //
@@ -35,19 +36,13 @@ typedef struct global_lasers {
 } global_lasers;
 
 
-err_t reset_lasers();
-
-
-err_t new_laser(pos_t x, pos_t y, laser_list* list);
+err_t reset_lasers(global_lasers* las);
 
 err_t new_laser_enemy(pos_t x, pos_t y, global_lasers* las);
 err_t new_laser_player(pos_t x, pos_t y, global_lasers* las);
 
-err_t move_lasers(global_lasers* las);
-err_t move_lasers_list(laser_list* list, int32_t dx, int32_t dy);
+err_t move_lasers_list_player(global_lasers* las, int32_t dy, enemy_list* ships, pos_t lowest);
+err_t move_lasers_list_enemy(global_lasers* las, int32_t dy, player_ship* ship);
 
-err_t delete_laser(laser* las, laser_list* list);
-
-uint32_t detect_collision(pos_t ship_x, pos_t ship_y, pos_t laser_x, pos_t laser_y);
 
 #endif /* LASER_H */

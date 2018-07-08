@@ -2,14 +2,19 @@
 
 #include <stddef.h>
 
+
+err_t new_laser(pos_t x, pos_t y, laser_list* list);
+err_t delete_laser(laser* las, laser_list* list);
+uint32_t detect_collision(pos_t ship_x, pos_t ship_y, pos_t laser_x, pos_t laser_y);
+
 err_t reset_lasers(global_lasers* las) {
     err_t err = ERR_NONE;
     uint32_t index;
 
     las->player_lasers.num_active = 0;
-    las->player_lasers.max_length = 10;
+    las->player_lasers.max_length = LASER_MAX_PLAYER;
     las->enemy_lasers.num_active = 0;
-    las->player_lasers.max_length = 40;
+    las->enemy_lasers.max_length = LASER_MAX_ENEMY;
 
     for (index = 0; index < las->player_lasers.max_length; index++) {
         las->player_lasers.list[index].active = 0;
@@ -95,7 +100,7 @@ err_t new_laser_player(pos_t x, pos_t y, global_lasers* las) {
     return display_error(err);
 }
 
-err_t move_lasers_list_player(global_lasers* las, int32_t dy, global_ships* ships) {
+err_t move_lasers_list_player(global_lasers* las, int32_t dy, enemy_list* ships, pos_t lowest) {
     err_t err = ERR_NONE;
 
     uint32_t index;
@@ -118,7 +123,7 @@ err_t move_lasers_list_player(global_lasers* las, int32_t dy, global_ships* ship
             las->player_lasers.list[index].laser_location.y += dy;
         }
         // Check if the laser is lower or higher than the lowest or highest enemies, if so
-        if (las->player_lasers.list[index].laser_location.y + SHIP_L_Y + LASER_L_Y > ships.lowest_ship) {
+        if (las->player_lasers.list[index].laser_location.y + SHIP_L_Y + LASER_L_Y > lowest) {
             detect_collision(0, 0, 0, 0);
         }
     }
@@ -128,7 +133,7 @@ err_t move_lasers_list_player(global_lasers* las, int32_t dy, global_ships* ship
 }
 
 
-err_t move_lasers_list_enemy(global_lasers* las, int32_t dy) {
+err_t move_lasers_list_enemy(global_lasers* las, int32_t dy, player_ship* ship) {
     err_t err = ERR_NONE;
 
     uint32_t index;
