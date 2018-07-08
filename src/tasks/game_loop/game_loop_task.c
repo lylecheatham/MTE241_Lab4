@@ -6,6 +6,7 @@
 #include "joystick_task.h"
 #include "laser.h"
 #include "ships.h"
+#include "display.h"
 
 __task void game_loop_task() {
     enemy_list ships_enemy;

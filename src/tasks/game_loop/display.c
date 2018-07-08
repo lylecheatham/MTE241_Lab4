@@ -2,21 +2,14 @@
 #include "GLCD.h"
 #include "images.h"
 
-
 err_t display_init(void) {
     err_t err = ERR_NONE;
 
     // Initialize the LCD
-    if (GLCD_Init() != 0) {
-        err = ERR_DISPLAY_FAIL_INIT;
-        return display_error(err);
-    }
+    GLCD_Init();
 
     // Initialize the background
-    if (GLCD_SetBackColor(Black) != 0) {
-        err = ERR_DISPLAY_FAIL_BACK;
-        return display_error(err);
-    }
+    GLCD_SetBackColor(Black);
 
     return display_error(err);
 }
@@ -25,10 +18,9 @@ err_t display_show(enemy_list* ships_enemy, player_ship* ship_player, laser_list
     err_t err = ERR_NONE;
 
     // Clear the display
-    if (GLCD_Clear(Black) != 0) {
-        err = ERR_DISPLAY_FAIL_BACK;
-        return display_error(err);
-    }
+    GLCD_Clear(Black);
+
+    //TODO iterate through and display
 
     return display_error(err);
 }
