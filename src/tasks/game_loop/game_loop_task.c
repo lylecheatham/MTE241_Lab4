@@ -29,6 +29,7 @@ __task void game_loop_task() {
 
     // loop
     while (1) {
+        // TODO calculate dx and dy
 
         // Move the enemies by the calculated dx and dy
         move_enemies(&ships_enemy, enemy_dx, enemy_dy);

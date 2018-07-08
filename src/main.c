@@ -30,9 +30,21 @@ __task void test_score() {
     }
 }
 __task void start_tasks() {
-    // Call score task init. The score task will creates all other tasks
+    // Initialize the score task
     score_task_init();
+
+    // Initialize the joystick task
+    joystick_task_init();
+
+    // Initialize the button task
+    button_task_init();
+
+    // Initialize the game loop task
+    game_loop_task_init();
+
+#ifdef TEST_CDE
     os_tsk_create(test_score, 1);
+#endif
 
     // Delete task because no longer needed
     os_tsk_delete_self();
@@ -44,7 +56,8 @@ __task void start_tasks() {
 }
 
 int main(void) {
-    printf("asdf");  // Initialize the UART before RTOS starts
+    // Initialize the UART before RTOS starts
+    printf("\n");
 
     os_sys_init(start_tasks);
 
