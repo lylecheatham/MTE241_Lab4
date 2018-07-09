@@ -99,8 +99,8 @@ err_t move_lasers_list_player(laser_list* las, vel_t dy, enemy_list* ships, pos_
                 err = delete_laser(&las->list[index], las);
             }
 
-            // Check if the laser is lower or higher than the lowest or highest enemies, if so
-            if (las->list[index].laser_location.y + SHIP_L_Y + LASER_L_Y > lowest) {
+            // Check if the laser is lower or higher than the lowest enemies
+            if (las->list[index].laser_location.y + SHIP_L_Y__2 + LASER_L_Y__2 > lowest) {
                 // TODO collision detection
                 detect_collision(0, 0, 0, 0);
             }
@@ -139,10 +139,12 @@ err_t move_lasers_list_enemy(laser_list* las, vel_t dy, player_ship* ship) {
                 err = delete_laser(&las->list[index], las);
             }
 
-            // Check if the laser is lower or higher than the lowest or highest enemies, if so
-            if (las->list[index].laser_location.y - SHIP_L_Y - LASER_L_Y < PLAYER_Y) {
-                // TODO add collision detection
-                detect_collision(0, 0, 0, 0);
+            // Check if the laser is lower or higher than the player
+            if (las->list[index].laser_location.y - SHIP_L_Y__2 - LASER_L_Y__2 < PLAYER_Y) {
+                // Check for a collision with the player
+                if (detect_collision(ship->ship_location.x, ship->ship_location.y, las->list[index].laser_location.x, las->list[index].laser_location.y) == 1) {
+                    game_state_over();
+                }
             }
         }
     }
@@ -188,21 +190,21 @@ err_t delete_laser(laser* las, laser_list* list) {
 //		err - The error
 uint32_t detect_collision(pos_t ship_x, pos_t ship_y, pos_t laser_x, pos_t laser_y) {
     if (ship_x > laser_x) {
-        if (!(ship_x - (SHIP_L_X + LASER_L_X) < laser_x)) {
+        if (!(ship_x - (SHIP_L_X__2 + LASER_L_X__2) < laser_x)) {
             return 0;
         }
     } else {
-        if (!(ship_x + (SHIP_L_X + LASER_L_X) > laser_x)) {
+        if (!(ship_x + (SHIP_L_X__2 + LASER_L_X__2) > laser_x)) {
             return 0;
         }
     }
 
     if (ship_y > laser_y) {
-        if (!(ship_y - (SHIP_L_Y + LASER_L_Y) < laser_y)) {
+        if (!(ship_y - (SHIP_L_Y__2 + LASER_L_Y__2) < laser_y)) {
             return 0;
         }
     } else {
-        if (!(ship_y + (SHIP_L_Y + LASER_L_Y) > laser_y)) {
+        if (!(ship_y + (SHIP_L_Y__2 + LASER_L_Y__2) > laser_y)) {
             return 0;
         }
     }
