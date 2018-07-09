@@ -112,7 +112,7 @@ err_t game_loop_task_init() {
     int tid;
 
     // get the tid of the score task
-    tid = os_tsk_create(game_loop_task, 1);
+    tid = os_tsk_create(game_loop_task, 3);
 
     // check the tid of the score task, return an error if it's zero
     if (tid == 0) err = ERR_GAME_LOOP_INIT_FAIL;

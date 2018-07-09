@@ -30,7 +30,7 @@ __task void score_task() {
     // loop
     while (1) {
         // wait until there is a change in score
-        os_sem_wait(&score_change, 0);
+        os_sem_wait(&score_change, 0xFFFF);
 
         // if the game over flag is set
         if (is_game_over()) {
@@ -68,7 +68,7 @@ err_t score_task_init() {
     os_sem_init(score_change, 0);
 
     // get the tid of the score task
-    tid = os_tsk_create(score_task, 1);
+    tid = os_tsk_create(score_task, 2);
 
     // check the tid of the score task, return an error if it's zero
     if (tid == 0) err = ERR_SCORE_INIT_FAIL;
