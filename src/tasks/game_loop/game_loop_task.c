@@ -39,6 +39,9 @@ __task void game_loop_task() {
     // Initialize the display
     display_init();
 
+    // Set wait time to 5 ticks = 50ms
+    os_itv_set(5);
+
     // loop
     while (1) {
         // TODO calculate dx and dy
@@ -68,9 +71,8 @@ __task void game_loop_task() {
         // Redraw the display
         display_show(&ships_enemy, &ship_player, &lasers_enemy, &lasers_player);
 
-        // TODO replace with a wait
-        // pass
-        os_tsk_pass();
+        // wait until the next 50ms uptime
+        os_itv_wait();
     }
 }
 
