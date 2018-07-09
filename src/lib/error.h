@@ -6,7 +6,7 @@
 
 typedef uint8_t err_t;
 
-void error_init(void) { printf("\n"); }
+void error_init(void);
 
 __inline err_t display_error(err_t err) {
     if (err == 0) return 0;
