@@ -1,5 +1,6 @@
 #include "game_state.h"
 #include "button_task.h"
+#include "game_loop_task.h"
 #include "joystick_task.h"
 #include "score_task.h"
 
@@ -37,7 +38,7 @@ err_t game_state_running(void) {
     global_game_state = game_running;
 
     // Call the necessary functions
-    // None
+    game_loop_start();
 
     // Return the error status
     return display_error(err);

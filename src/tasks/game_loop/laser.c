@@ -1,4 +1,5 @@
 #include "laser.h"
+#include "game_state.h"
 
 #include <stddef.h>
 
