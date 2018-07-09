@@ -9,5 +9,4 @@ err_t button_task_init(void);
 
 uint32_t button_press_get(void);
 
-
 #endif /* BUTTON_H */
