@@ -2,12 +2,17 @@
 #define ERROR_H
 
 #include <stdint.h>
+#include <stdio.h>
 
 typedef uint8_t err_t;
 
-void error_init(void);
+void error_init(void) { printf("\n"); }
 
-err_t display_error(err_t err);
+inline err_t display_error(err_t err) {
+    if (err == 0) return 0;
+    printf("ERROR: %u\n", err);
+    return err;
+}
 
 enum ERROR {
     ERR_NONE = 0,
