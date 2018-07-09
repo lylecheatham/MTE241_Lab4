@@ -4,8 +4,7 @@
 
 #include "util.h"
 
-void init_button(void) {
-}
+void init_button(void) {}
 
 // returns a uint32_t number indicating button state of the button.
 //

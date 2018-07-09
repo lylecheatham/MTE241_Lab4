@@ -56,6 +56,7 @@ int main(void) {
     // Initialize the UART before RTOS starts
     printf("\n");
 
+    // Start the RTOS
     os_sys_init(start_tasks);
 
     while (1)
