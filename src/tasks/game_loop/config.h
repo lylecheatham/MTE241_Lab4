@@ -9,9 +9,13 @@
 
 // sizes of things
 #define SHIP_L_X 10
+#define SHIP_L_X__2 (SHIP_L_X / 2)
 #define SHIP_L_Y 10
+#define SHIP_L_Y__2 (SHIP_L_Y / 2)
 #define LASER_L_X 2
+#define LASER_L_X__2 (LASER_L_X / 2)
 #define LASER_L_Y 10
+#define LASER_L_Y__2 (LASER_L_Y / 2)
 
 // Speeds of things
 #define LASER_SPEED 10
