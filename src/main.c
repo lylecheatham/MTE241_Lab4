@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include "button_task.h"
+#include "display.h"
 #include "game_loop_task.h"
 #include "joystick_task.h"
 #include "score_task.h"
@@ -54,7 +55,11 @@ __task void start_tasks() {
 
 int main(void) {
     // Initialize the UART before RTOS starts
-    printf("\n");
+    error_init();
+
+    // Initialize the display before the RTOS starts because sometimes it's slow
+    display_init();
+
 
     // Start the RTOS
     os_sys_init(start_tasks);
