@@ -26,8 +26,6 @@ __task void game_loop_task() {
     vel_t enemy_dx;
     vel_t enemy_dy;
 
-    // Initialize the display
-    display_init();
 
     // Set wait time to 5 ticks = 50ms
     os_itv_set(5);
