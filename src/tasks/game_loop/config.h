@@ -5,7 +5,7 @@
 #define SCREEN_Y_MIN 0
 #define SCREEN_Y_MAX 320
 #define SCREEN_X_MIN 0
-#define SCREEN_X_MAX 180
+#define SCREEN_X_MAX 240
 
 // sizes of things
 #define SHIP_L_X 10
