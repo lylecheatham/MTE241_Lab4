@@ -100,6 +100,10 @@ __task void game_loop_task() {
             // Get the button status
             button_pressed = button_press_get();
 
+            if (button_pressed == 1) {
+                new_laser(ship_player.ship_location.x, ship_player.ship_location.y, &lasers_player);
+            }
+
             // Move the player accordingly
             if (direction == dir_left) {
                 move_player(&ship_player, -PLAYER_SPEED);
