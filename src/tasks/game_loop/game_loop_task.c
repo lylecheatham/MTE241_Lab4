@@ -25,6 +25,8 @@ __task void game_loop_task() {
     pos_t lowest_enemy;
     joy_dir_t direction;
     uint32_t button_pressed;
+    pos_t enemy_x;
+    pos_t enemy_y;
     vel_t enemy_dx;
     vel_t enemy_dy;
 
@@ -47,6 +49,8 @@ __task void game_loop_task() {
         button_pressed = 0;
         enemy_dx = 5;
         enemy_dy = 0;
+        enemy_x = SHIP_EDGE_BUFFER;
+        enemy_y = SCREEN_Y_MAX - SHIP_EDGE_BUFFER;
 
         // Wait for the run flag to be set
         while (global_game_loop_run_flag == 0) {
@@ -59,7 +63,33 @@ __task void game_loop_task() {
 
         // Run until the reset flag is set
         while (global_game_loop_reset_flag == 0) {
-            // TODO calculate dx and dy
+            enemy_x += enemy_dx;
+            enemy_dy = 0;
+
+            // If we get to positive end of the screen
+            if (enemy_x < SCREEN_X_MAX - SHIP_EDGE_BUFFER - (SHIP_ENEMY_SPACING_X * SHIP_NUM_X)) {
+                // Reverse direction
+                enemy_dx = -5;
+
+                // undo the erroneous increment and decrement
+                enemy_x += 2 * enemy_dx;
+
+                // set the y velocity to be negative
+                enemy_dy = -5;
+
+                // If we get to the negative end of the screen
+            } else if (enemy_x > SCREEN_X_MIN + SHIP_EDGE_BUFFER) {
+                // Reverse direction
+                enemy_dx = 5;
+
+                // undo the erroneous increment and decrement
+                enemy_x += 2 * enemy_dx;
+
+                // set the y velocity to be negative
+                enemy_dy = -5;
+            }
+
+            // TODO end game if enemies get to player
 
             // Move the enemies by the calculated dx and dy
             move_enemies(&ships_enemy, enemy_dx, enemy_dy);
