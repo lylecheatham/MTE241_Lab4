@@ -16,11 +16,11 @@ __task void button_task() {
 
     // loop
     while (1) {
-        if(game_state_get() == game_running){
+        if (game_state_get() == game_running) {
             pressed = pressed | get_button_press();
         } else {
-            if(get_button_press() == 1){
-                if(game_state_get() == game_waiting){
+            if (get_button_press() == 1) {
+                if (game_state_get() == game_waiting) {
                     game_state_running();
                 } else {
                     game_state_waiting();
