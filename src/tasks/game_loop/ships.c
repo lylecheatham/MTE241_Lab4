@@ -90,8 +90,8 @@ err_t move_enemy(enemy* ship, vel_t dx, vel_t dy) {
     }
 
     // Check to ensure ships are within the bounds of the screen
-    if (ship->ship_location.x + dx > SCREEN_X_MAX || ship->ship_location.y + dy > SCREEN_Y_MAX || ship->ship_location.x + dx < SCREEN_X_MIN ||
-        ship->ship_location.y + dy < SCREEN_Y_MIN) {
+    if (ship->ship_location.x + dx > SCREEN_X_MAX - SHIP_EDGE_BUFFER || ship->ship_location.y + dy > SCREEN_Y_MAX - SHIP_EDGE_BUFFER ||
+        ship->ship_location.x + dx < SCREEN_X_MIN + SHIP_EDGE_BUFFER || ship->ship_location.y + dy < SCREEN_Y_MIN + SHIP_EDGE_BUFFER) {
         err = ERR_SHIP_OUT_BOUNDS;
         return display_error(err);
     }
@@ -114,7 +114,7 @@ err_t move_player(player_ship* ship, vel_t dx) {
     }
 
     // Check to ensure player is within the bounds of the screen
-    if (ship->ship_location.x + dx > SCREEN_X_MAX || ship->ship_location.x + dx < SCREEN_X_MIN) {
+    if (ship->ship_location.x + dx > SCREEN_X_MAX - SHIP_EDGE_BUFFER || ship->ship_location.x + dx < SCREEN_X_MIN + SHIP_EDGE_BUFFER) {
         err = ERR_SHIP_PLAYER_OUT_BOUNDS;
         return display_error(err);
     }
