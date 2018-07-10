@@ -67,7 +67,7 @@ __task void game_loop_task() {
             enemy_dy = 0;
 
             // If we get to positive end of the screen
-            if (enemy_x < SCREEN_X_MAX - SHIP_EDGE_BUFFER - (SHIP_ENEMY_SPACING_X * SHIP_NUM_X)) {
+            if (enemy_x > SCREEN_X_MAX - SHIP_EDGE_BUFFER - (SHIP_ENEMY_SPACING_X * SHIP_NUM_X)) {
                 // Reverse direction
                 enemy_dx = -5;
 
@@ -78,7 +78,7 @@ __task void game_loop_task() {
                 enemy_dy = -5;
 
                 // If we get to the negative end of the screen
-            } else if (enemy_x > SCREEN_X_MIN + SHIP_EDGE_BUFFER) {
+            } else if (enemy_x < SCREEN_X_MIN + SHIP_EDGE_BUFFER) {
                 // Reverse direction
                 enemy_dx = 5;
 
