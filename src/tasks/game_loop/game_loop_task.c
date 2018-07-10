@@ -8,16 +8,18 @@
 #include "joystick_task.h"
 #include "laser.h"
 #include "ships.h"
+#include "game_state.h"
 
 uint32_t global_game_loop_reset_flag = 0;
 uint32_t global_game_loop_run_flag = 0;
-
-__task void game_loop_task() {
-    // Structures for the game function
     enemy_list ships_enemy;
     player_ship ship_player;
     laser_list lasers_enemy;
     laser_list lasers_player;
+
+__task void game_loop_task() {
+    // Structures for the game function
+
 
     // Variables to be held loop to loop
     pos_t lowest_enemy;
@@ -29,6 +31,9 @@ __task void game_loop_task() {
 
     // Set wait time to 5 ticks = 50ms
     os_itv_set(5);
+    
+    // Initialize the game state
+    game_state_waiting();
 
     while (1) {
         // Initialize the game function structures
@@ -45,11 +50,12 @@ __task void game_loop_task() {
 
         // Wait for the run flag to be set
         while (global_game_loop_run_flag == 0) {
-            os_tsk_pass();
+            os_itv_wait();
         }
 
-        // Clear the run flag
+        // Clear the run and the reset flag
         global_game_loop_run_flag = 0;
+        global_game_loop_reset_flag = 0;
 
         // Run until the reset flag is set
         while (global_game_loop_reset_flag == 0) {

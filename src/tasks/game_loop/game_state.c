@@ -29,7 +29,7 @@ err_t game_state_running(void) {
     err_t err = ERR_NONE;
 
     // Check for an invalid state transition
-    if (global_game_state != game_running) {
+    if (global_game_state != game_waiting) {
         err = ERR_GAME_STATE_INVALID;
         // Continue running, potentially the user wanted this
     }

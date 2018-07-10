@@ -11,6 +11,9 @@ err_t display_init(void) {
     // Initialize the background
     GLCD_SetBackColor(Black);
 
+    // Clear the display
+    GLCD_Clear(Black);
+
     return display_error(err);
 }
 

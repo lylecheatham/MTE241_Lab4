@@ -1,8 +1,9 @@
-#include "joystick_task.h"
+#include "button_task.h"
 
 #include <RTL.h>
 
 #include "button.h"
+#include "game_state.h"
 
 uint32_t pressed;
 
@@ -15,7 +16,18 @@ __task void button_task() {
 
     // loop
     while (1) {
-        pressed = pressed | get_button_press();
+        if(game_state_get() == game_running){
+            pressed = pressed | get_button_press();
+        } else {
+            if(get_button_press() == 1){
+                if(game_state_get() == game_waiting){
+                    game_state_running();
+                } else {
+                    game_state_waiting();
+                }
+                os_dly_wait(10);
+            }
+        }
 
         // pass
         os_tsk_pass();
