@@ -11,6 +11,7 @@
 #include "ships.h"
 
 err_t wait_inputs(void);
+err_t clear_inputs(void);
 
 uint32_t global_game_loop_reset_flag = 0;
 uint32_t global_game_loop_run_flag = 0;
@@ -110,6 +111,9 @@ __task void game_loop_task() {
             // Get the button status
             button_pressed = button_press_get();
 
+            // Clear the input flags so that we guarantee that we get fresh data next time
+            clear_inputs();
+
             // Move the player accordingly
             if (direction == dir_left) {
                 move_player(&ship_player, PLAYER_SPEED);
@@ -184,11 +188,23 @@ err_t wait_inputs(void) {
         return display_error(err);
     }
 
-    // Clear the button and joystick flag
-    os_evt_clr(0x03, game_loop_tid);
-
     // Wait for the button and joystick flags to be set so that we can get fresh inputs
     os_evt_wait_and(0x03, 5);
+
+    return display_error(err);
+}
+
+err_t clear_inputs(void) {
+    err_t err = ERR_NONE;
+
+    // Check for valid TID
+    if (game_loop_tid == 0) {
+        err = ERR_GAME_LOOP_TID;
+        return display_error(err);
+    }
+
+    // Clear the button and joystick flag
+    os_evt_clr(0x03, game_loop_tid);
 
     return display_error(err);
 }
