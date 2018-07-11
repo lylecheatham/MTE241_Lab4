@@ -98,7 +98,7 @@ __task void game_loop_task() {
 
             lowest_enemy += enemy_dy;
 
-            if (lowest_enemy > PLAYER_Y) {
+            if (lowest_enemy < PLAYER_Y) {
                 game_state_over();
             }
 
