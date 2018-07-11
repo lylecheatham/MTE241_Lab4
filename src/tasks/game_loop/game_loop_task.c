@@ -32,7 +32,7 @@ __task void game_loop_task() {
 
 
     // Set wait time to 5 ticks = 50ms
-    os_itv_set(5);
+    os_itv_set(50);
 
     // Initialize the game state
     game_state_waiting();
@@ -67,7 +67,7 @@ __task void game_loop_task() {
             enemy_dy = 0;
 
             // If we get to positive end of the screen
-            if (enemy_x > SCREEN_X_MAX - SHIP_EDGE_BUFFER - (SHIP_ENEMY_SPACING_X * SHIP_NUM_X)) {
+            if (enemy_x > SCREEN_X_MAX - SHIP_EDGE_BUFFER - (SHIP_ENEMY_SPACING_X * (SHIP_NUM_X - 1))) {
                 // Reverse direction
                 enemy_dx = -5;
 
@@ -100,15 +100,15 @@ __task void game_loop_task() {
             // Get the button status
             button_pressed = button_press_get();
 
-            if (button_pressed == 1) {
-                new_laser(ship_player.ship_location.x, ship_player.ship_location.y, &lasers_player);
-            }
-
             // Move the player accordingly
             if (direction == dir_left) {
-                move_player(&ship_player, -PLAYER_SPEED);
-            } else if (direction == dir_right) {
                 move_player(&ship_player, PLAYER_SPEED);
+            } else if (direction == dir_right) {
+                move_player(&ship_player, -PLAYER_SPEED);
+            }
+
+            if (button_pressed == 1) {
+                new_laser(ship_player.ship_location.x, ship_player.ship_location.y, &lasers_player);
             }
 
             // Move the player lasers
