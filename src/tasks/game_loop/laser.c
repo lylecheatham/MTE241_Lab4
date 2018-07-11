@@ -138,6 +138,7 @@ err_t detect_collision_enemy_ships(laser* las, enemy_list* ships, laser_list* la
 
                 // Delete the ship
                 ships->list[index].active = 0;
+                ships->num_alive--;
 
                 // Increment the score
                 err = score_increment();
