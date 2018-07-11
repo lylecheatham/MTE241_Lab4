@@ -132,8 +132,15 @@ err_t detect_collision_enemy_ships(laser* las, enemy_list* ships, laser_list* la
         if (ships->list[index].active == 1) {
             count++;
             if (detect_collision(0, 0, las->laser_location.x, las->laser_location.y) == 1) {
-                delete_laser(las, las_list);
-                // TODO delete ship and increment socre
+                // Delete the laser
+                err = delete_laser(las, las_list);
+
+                // TODO delete ship
+
+                // Increment the score
+                err = score_increment();
+
+                // Return because the laser has been deleted
                 return display_error(err);
             }
         }
@@ -173,7 +180,8 @@ err_t move_lasers_list_enemy(laser_list* las, vel_t dy, player_ship* ship) {
             if (las->list[index].laser_location.y - SHIP_L_Y__2 - LASER_L_Y__2 < PLAYER_Y) {
                 // Check for a collision with the player
                 if (detect_collision(ship->ship_location.x, ship->ship_location.y, las->list[index].laser_location.x, las->list[index].laser_location.y) == 1) {
-                    game_state_over();
+                    // Game over
+                    err = game_state_over();
                 }
             }
         }
