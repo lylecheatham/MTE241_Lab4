@@ -10,4 +10,8 @@ err_t game_loop_reset(void);
 
 err_t game_loop_start(void);
 
+err_t set_wait_inputs_joystick(void);
+
+err_t set_wait_inputs_button(void);
+
 #endif /* GAME_LOOP_TASK_H */

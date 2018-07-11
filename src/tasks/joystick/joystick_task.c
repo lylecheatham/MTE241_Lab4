@@ -2,6 +2,7 @@
 
 #include <RTL.h>
 
+#include "game_loop_task.h"
 #include "joystick.h"
 
 joy_dir_t direction;
@@ -41,6 +42,10 @@ __task void joystick_task() {
                 display_error(ERR_JOYSTICK_INVALID_VAL);
                 break;
         }
+
+        // Send the event flag to the game loop that a joystick input was read
+        set_wait_inputs_joystick();
+
         // pass
         os_tsk_pass();
     }

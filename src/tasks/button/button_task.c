@@ -3,6 +3,7 @@
 #include <RTL.h>
 
 #include "button.h"
+#include "game_loop_task.h"
 #include "game_state.h"
 
 uint32_t pressed;
@@ -28,6 +29,9 @@ __task void button_task() {
                 os_dly_wait(10);
             }
         }
+
+        // Send the event flag to the game loop that a button input was read
+        set_wait_inputs_button();
 
         // pass
         os_tsk_pass();

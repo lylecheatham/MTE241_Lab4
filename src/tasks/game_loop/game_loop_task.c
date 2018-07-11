@@ -10,8 +10,13 @@
 #include "laser.h"
 #include "ships.h"
 
+err_t wait_inputs(void);
+
 uint32_t global_game_loop_reset_flag = 0;
 uint32_t global_game_loop_run_flag = 0;
+
+OS_TID game_loop_tid = -1;
+
 enemy_list ships_enemy;
 player_ship ship_player;
 laser_list lasers_enemy;
@@ -63,6 +68,9 @@ __task void game_loop_task() {
 
         // Run until the reset flag is set
         while (global_game_loop_reset_flag == 0) {
+            // Wait for the inputs from joystick and button
+            wait_inputs();
+
             enemy_x += enemy_dx;
             enemy_dy = 0;
 
@@ -150,14 +158,65 @@ err_t game_loop_start() {
 
 err_t game_loop_task_init() {
     err_t err = ERR_NONE;
-    int tid;
+    OS_TID tid;
 
     // get the tid of the score task
     tid = os_tsk_create(game_loop_task, 3);
 
     // check the tid of the score task, return an error if it's zero
-    if (tid == 0) err = ERR_GAME_LOOP_INIT_FAIL;
+    if (tid == 0) {
+        err = ERR_GAME_LOOP_INIT_FAIL;
+    } else {
+        game_loop_tid = tid;
+    }
 
-    // return no error
+    return display_error(err);
+}
+
+err_t wait_inputs(void) {
+    err_t err = ERR_NONE;
+
+    // Check for valid TID
+    if (game_loop_tid == -1) {
+        err = ERR_GAME_LOOP_TID;
+        return display_error(err);
+    }
+
+    // Clear the button and joystick flag
+    os_evt_clr(0x03, game_loop_tid);
+
+    // Wait for the button and joystick flags to be set so that we can get fresh inputs
+    os_evt_wait_and(0x03, 5);
+
+    return display_error(err);
+}
+
+err_t set_wait_inputs_joystick(void) {
+    err_t err = ERR_NONE;
+
+    // Check for valid TID
+    if (game_loop_tid == -1) {
+        err = ERR_GAME_LOOP_TID;
+        return display_error(err);
+    }
+
+    // Set the joystick flag to indicate it has been read
+    os_evt_set(0x01, game_loop_tid);
+
+    return display_error(err);
+}
+
+err_t set_wait_inputs_button(void) {
+    err_t err = ERR_NONE;
+
+    // Check for valid TID
+    if (game_loop_tid == -1) {
+        err = ERR_GAME_LOOP_TID;
+        return display_error(err);
+    }
+
+    // Set the button flag to indicate it has been read
+    os_evt_set(0x02, game_loop_tid);
+
     return display_error(err);
 }
