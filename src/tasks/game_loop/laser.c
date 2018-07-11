@@ -18,6 +18,7 @@ err_t reset_lasers(laser_list* enemy_lasers, laser_list* player_lasers) {
     // This happens when the user hits the button so it will have entropy
     srand(os_time_get());
 
+
     player_lasers->num_active = 0;
     player_lasers->max_length = LASER_MAX_PLAYER;
     enemy_lasers->num_active = 0;
