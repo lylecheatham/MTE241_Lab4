@@ -132,11 +132,12 @@ err_t detect_collision_enemy_ships(laser* las, enemy_list* ships, laser_list* la
     for (index = 0, count = 0; index < ships->max_num_enemies && count < ships->num_alive; index++) {
         if (ships->list[index].active == 1) {
             count++;
-            if (detect_collision(0, 0, las->laser_location.x, las->laser_location.y) == 1) {
+            if (detect_collision(ships->list[index].ship_location.x, ships->list[index].ship_location.y, las->laser_location.x, las->laser_location.y) == 1) {
                 // Delete the laser
                 err = delete_laser(las, las_list);
 
-                // TODO delete ship
+                // Delete the ship
+                ships->list[index].active = 0;
 
                 // Increment the score
                 err = score_increment();
