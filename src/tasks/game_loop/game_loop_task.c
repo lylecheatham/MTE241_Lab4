@@ -15,7 +15,7 @@ err_t wait_inputs(void);
 uint32_t global_game_loop_reset_flag = 0;
 uint32_t global_game_loop_run_flag = 0;
 
-OS_TID game_loop_tid = -1;
+OS_TID game_loop_tid = 0;
 
 enemy_list ships_enemy;
 player_ship ship_player;
@@ -180,7 +180,7 @@ err_t wait_inputs(void) {
     err_t err = ERR_NONE;
 
     // Check for valid TID
-    if (game_loop_tid == -1) {
+    if (game_loop_tid == 0) {
         err = ERR_GAME_LOOP_TID;
         return display_error(err);
     }
@@ -198,7 +198,7 @@ err_t set_wait_inputs_joystick(void) {
     err_t err = ERR_NONE;
 
     // Check for valid TID
-    if (game_loop_tid == -1) {
+    if (game_loop_tid == 0) {
         err = ERR_GAME_LOOP_TID;
         return display_error(err);
     }
@@ -213,7 +213,7 @@ err_t set_wait_inputs_button(void) {
     err_t err = ERR_NONE;
 
     // Check for valid TID
-    if (game_loop_tid == -1) {
+    if (game_loop_tid == 0) {
         err = ERR_GAME_LOOP_TID;
         return display_error(err);
     }
