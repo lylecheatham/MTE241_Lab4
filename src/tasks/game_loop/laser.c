@@ -6,6 +6,7 @@
 
 err_t delete_laser(laser* las, laser_list* list);
 uint32_t detect_collision(pos_t ship_x, pos_t ship_y, pos_t laser_x, pos_t laser_y);
+err_t detect_collision_enemy_ships(laser* las, enemy_list* ships, laser_list* las_list);
 
 err_t reset_lasers(laser_list* enemy_lasers, laser_list* player_lasers) {
     err_t err = ERR_NONE;
@@ -101,8 +102,7 @@ err_t move_lasers_list_player(laser_list* las, vel_t dy, enemy_list* ships, pos_
 
             // Check if the laser is lower or higher than the lowest enemies
             if (las->list[index].laser_location.y + SHIP_L_Y__2 + LASER_L_Y__2 > lowest) {
-                // TODO collision detection
-                detect_collision(0, 0, 0, 0);
+                err = detect_collision_enemy_ships(&(las->list[index]), ships, las);
             }
         }
     }
@@ -111,6 +111,29 @@ err_t move_lasers_list_player(laser_list* las, vel_t dy, enemy_list* ships, pos_
     return display_error(err);
 }
 
+err_t detect_collision_enemy_ships(laser* las, enemy_list* ships, laser_list* las_list) {
+    err_t err = ERR_NONE;
+    uint32_t index;
+    uint32_t count;
+
+    if (las == NULL || ships == NULL || las_list == NULL) {
+        err = ERR_LASER_NULLPTR;
+        return display_error(err);
+    }
+
+    for (index = 0, count = 0; index < ships->max_num_enemies && count < ships->num_alive; index++) {
+        if (ships->list[index].active == 1) {
+            count++;
+            if (detect_collision(0, 0, las->laser_location.x, las->laser_location.y) == 1) {
+                delete_laser(las, las_list);
+                // TODO delete ship and increment socre
+                return display_error(err);
+            }
+        }
+    }
+
+    return display_error(err);
+}
 
 err_t move_lasers_list_enemy(laser_list* las, vel_t dy, player_ship* ship) {
     err_t err = ERR_NONE;
