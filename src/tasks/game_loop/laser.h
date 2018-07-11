@@ -38,5 +38,7 @@ err_t new_laser(pos_t x, pos_t y, laser_list* list);
 err_t move_lasers_list_player(laser_list* las, vel_t dy, enemy_list* ships, pos_t lowest);
 err_t move_lasers_list_enemy(laser_list* las, vel_t dy, player_ship* ship);
 
+err_t rand_enemy_lasers(laser_list* enemy_lasers, enemy_list* ships);
+
 
 #endif /* LASER_H */

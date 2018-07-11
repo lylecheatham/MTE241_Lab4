@@ -1,7 +1,9 @@
 #include "laser.h"
-#include "game_state.h"
-
+#include <RTL.h>
 #include <stddef.h>
+#include <stdlib.h>
+#include "game_state.h"
+#include "score_task.h"
 
 
 err_t delete_laser(laser* las, laser_list* list);
@@ -11,6 +13,10 @@ err_t detect_collision_enemy_ships(laser* las, enemy_list* ships, laser_list* la
 err_t reset_lasers(laser_list* enemy_lasers, laser_list* player_lasers) {
     err_t err = ERR_NONE;
     uint32_t index;
+
+    // Seed the random generator with the current time
+    // This happens when the user hits the button so it will have entropy
+    srand(os_time_get());
 
     player_lasers->num_active = 0;
     player_lasers->max_length = LASER_MAX_PLAYER;
@@ -116,6 +122,7 @@ err_t detect_collision_enemy_ships(laser* las, enemy_list* ships, laser_list* la
     uint32_t index;
     uint32_t count;
 
+    // Nullptr check
     if (las == NULL || ships == NULL || las_list == NULL) {
         err = ERR_LASER_NULLPTR;
         return display_error(err);
@@ -196,6 +203,44 @@ err_t delete_laser(laser* las, laser_list* list) {
 
     // Decrement the active count for the list
     list->num_active--;
+
+    return display_error(err);
+}
+
+err_t rand_enemy_lasers(laser_list* enemy_lasers, enemy_list* ships) {
+    err_t err = ERR_NONE;
+    uint32_t rand_uint = 0;
+    uint32_t index = 0;
+    uint32_t count = 0;
+
+
+    // Perform a nullptr check
+    if (enemy_lasers == NULL || ships == NULL) {
+        err = ERR_LASER_NULLPTR;
+        return display_error(err);
+    }
+
+    if (ships->num_alive == 0) {
+        err = ERR_LASER_NONE_ALIVE;
+        return display_error(err);
+    }
+
+
+    rand_uint = rand();
+
+    // Only generate a shot half the time
+    if (rand_uint % 2 == 1) {
+        rand_uint = rand_uint % ships->num_alive;
+        for (index = 0, count = 0; index < ships->max_num_enemies && count < ships->num_alive; index++) {
+            if (ships->list[index].active == 1) {
+                if (count == rand_uint) {
+                    err = new_laser(ships->list[index].ship_location.x, ships->list[index].ship_location.y, enemy_lasers);
+                    return display_error(err);
+                }
+                count++;
+            }
+        }
+    }
 
     return display_error(err);
 }
