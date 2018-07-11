@@ -55,7 +55,6 @@ __task void game_loop_task() {
         enemy_dx = 5;
         enemy_dy = 0;
         enemy_x = SHIP_EDGE_BUFFER;
-        enemy_y = SCREEN_Y_MAX - SHIP_EDGE_BUFFER;
 
         // Wait for the run flag to be set
         while (global_game_loop_run_flag == 0) {
@@ -97,7 +96,11 @@ __task void game_loop_task() {
                 enemy_dy = -5;
             }
 
-            // TODO end game if enemies get to player
+            lowest_enemy += enemy_dy;
+
+            if (lowest_enemy > PLAYER_Y) {
+                game_state_over();
+            }
 
             // Move the enemies by the calculated dx and dy
             move_enemies(&ships_enemy, enemy_dx, enemy_dy);
