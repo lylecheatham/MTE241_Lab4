@@ -121,8 +121,14 @@ __task void game_loop_task() {
                 move_player(&ship_player, -PLAYER_SPEED);
             }
 
+            // On button press shoot a laser from the player
             if (button_pressed == 1) {
                 new_laser(ship_player.ship_location.x, ship_player.ship_location.y, &lasers_player);
+            }
+
+            // If there are no ships left, reset the board but don't reset the score
+            if(ships_enemy.num_alive == 0){
+                reset_ships(&ships_enemy, &ship_player);
             }
 
             // Move the player lasers
