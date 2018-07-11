@@ -117,6 +117,9 @@ __task void game_loop_task() {
             // Move the enemy lasers
             move_lasers_list_enemy(&lasers_enemy, -LASER_SPEED, &ship_player);
 
+            // Generate random enemy lasers
+            rand_enemy_lasers(&lasers_enemy, &ships_enemy);
+
             // Redraw the display
             display_show(&ships_enemy, &ship_player, &lasers_enemy, &lasers_player);
 
