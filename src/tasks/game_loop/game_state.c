@@ -21,6 +21,8 @@ err_t game_state_over(void) {
     // Call the necessary functions
     score_game_over();
 
+    game_loop_reset();
+
     // Return the error status
     return display_error(err);
 }
@@ -58,8 +60,6 @@ err_t game_state_waiting(void) {
 
     // Call the necessary functions
     score_reset();
-
-    game_loop_reset();
 
     // Return the error status
     return display_error(err);
