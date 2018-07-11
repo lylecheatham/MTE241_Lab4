@@ -31,7 +31,6 @@ __task void game_loop_task() {
     joy_dir_t direction;
     uint32_t button_pressed;
     pos_t enemy_x;
-    pos_t enemy_y;
     vel_t enemy_dx;
     vel_t enemy_dy;
 
