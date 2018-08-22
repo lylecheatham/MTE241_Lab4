@@ -8,7 +8,7 @@ Creating a game to run on an LPC1768 dev board, which as an LCD screen, a joysti
 
 [Specification Document (PDF)](specification/specification.pdf)
 
-# Building
+## Building
 
 The project is meant to be built in Keil uVision 4.
 
